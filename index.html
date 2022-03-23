@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+    <title>Carousel slider in vanilla JS - Demo</title>
+  </head>
+  <body>
+    <section class="carousel">
+      <button class="carousel__button carousel__button--left">
+        <img src="./images/back.svg" alt="previous" />
+      </button>
+
+      <div class="carousel__track-container">
+        <ul class="carousel__track">
+          <li class="carousel__slide current-slide">
+            <img src="https://unsplash.it/600/400" class="carousel__image" alt="" />
+          </li>
+          <li class="carousel__slide">
+            <img src="https://unsplash.it/601/400" class="carousel__image" alt="" />
+          </li>
+          <li class="carousel__slide">
+            <img src="https://unsplash.it/602/400" class="carousel__image" alt="" />
+          </li>
+        </ul>
+      </div>
+
+      <button class="carousel__button carousel__button--right">
+        <img src="./images/forward.svg" alt="next" />
+      </button>
+      <section class="carousel__navigation">
+        <!-- aria-label="slider navigation indicator" -->
+        <!-- aria-hidden="true" -->
+        <button class="carousel__indicator current-slide"></button>
+        <button class="carousel__indicator"></button>
+        <button class="carousel__indicator"></button>
+      </section>
+    </section>
+  </body>
+</html>

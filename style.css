@@ -1,0 +1,85 @@
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f5fdfd;
+}
+
+/* Carousel */
+.carousel {
+  position: relative;
+  height: 400px;
+  width: 80%;
+  max-width: 665px;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+.carousel__track-container {
+  position: relative;
+  background: rgb(187, 247, 187);
+  height: 100%;
+  overflow: hidden;
+}
+.carousel__track {
+  position: relative;
+  list-style-type: none;
+  height: 100%;
+  transition: transform 400ms ease;
+}
+.carousel__slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+.carousel__image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+/* Slider left/right buttons */
+.carousel__button {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.carousel__button img {
+  width: 20px;
+}
+.carousel__button--left {
+  left: -25px;
+}
+.carousel__button--right {
+  right: -25px;
+}
+
+/* Slider bottom navigation indicators */
+.carousel__navigation {
+  height: 40px;
+}
+.carousel__indicator {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  border: none;
+}
+.carousel__navigation {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 10px;
+}
+.carousel__indicator.current-slide {
+  background-color: rgba(0, 0, 0, 0.75);
+}
