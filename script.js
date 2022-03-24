@@ -6,8 +6,49 @@ const slides = Array.from(slider.children);
 // Select bottom indicators
 const indicatorsContainer = document.querySelector(".carousel__navigation");
 const indicators = Array.from(document.querySelector(".carousel__navigation").children);
-// Get 1st image width
-let width = slides[0].getBoundingClientRect().width;
+let width;
+
+// Button func to move slider
+nextBtn.addEventListener("click", () => {
+  // grab current img slides & move slide on click
+  const currentSlide = document.querySelector(".current-slide");
+  const nextSlide = currentSlide.nextElementSibling;
+  moveSlide(slider, currentSlide, nextSlide);
+  // grab current indicators and update to show current location on slider
+  const currentIndicator = indicatorsContainer.querySelector(".current-slide");
+  const nextIndicator = currentIndicator.nextElementSibling;
+  updateIndicators(currentIndicator, nextIndicator);
+});
+
+prevBtn.addEventListener("click", () => {
+  // grab current img slides & move slide on click
+  const currentSlide = document.querySelector(".current-slide");
+  const prevSlide = currentSlide.previousElementSibling;
+  moveSlide(slider, currentSlide, prevSlide);
+  // grab current indicators and update to show current location on slider
+  const currentIndicator = indicatorsContainer.querySelector(".current-slide");
+  const prevIndicator = currentIndicator.previousElementSibling;
+  updateIndicators(currentIndicator, prevIndicator);
+});
+
+// Indicators func to move slider
+indicatorsContainer.addEventListener("click", (e) => {
+  // grab clicked indicator dot
+  const targetIndicator = e.target.closest("button");
+  // return if clicked outside indicator
+  if (!targetIndicator) {
+    return;
+  }
+  // grab current img slide & indicator dot
+  const currentSlide = slider.querySelector(".current-slide");
+  const currentIndicator = indicatorsContainer.querySelector(".current-slide");
+  // grab index by matching elements
+  const targetIndex = indicators.findIndex((dot) => dot === targetIndicator);
+  // grab target slide
+  const targetSlide = slides[targetIndex];
+  moveSlide(slider, currentSlide, targetSlide);
+  updateIndicators(currentIndicator, targetIndicator);
+});
 
 // Functions
 const givePosition = (slide, index) => {
@@ -26,51 +67,26 @@ const updateIndicators = (currentIndicator, targetIndicator) => {
   targetIndicator.classList.add("current-slide");
 };
 
-// Give position to images inside slider track to follow each other
-slides.forEach((slide, index) => givePosition(slide, index));
-
-// Button func to move slider
-nextBtn.addEventListener("click", () => {
-  // grab current img slides & move slide on click
+// Set and update slider width and images positions
+const calulateSliderImgWidthAndPositonImgs = () => {
+  // Get image slide width
+  width = slides[0].getBoundingClientRect().width;
+  // give position to images inside slider track to follow each other
+  slides.forEach((slide, index) => givePosition(slide, index));
+  // grab current img slide
   const currentSlide = document.querySelector(".current-slide");
-  const nextSlide = currentSlide.nextElementSibling;
-  moveSlide(slider, currentSlide, nextSlide);
+  const amountToMove = currentSlide.style.left;
+  slider.style.transform = `translateX(-${amountToMove})`;
+  // disable transition on resize
+  slider.style.transition = "none";
+  // return transition after timeout
+  setTimeout(() => {
+    slider.style.transition = "transform 400ms ease";
+  }, 200);
+};
 
-  // grab current indicators and update to show current location on slider
-  const currentIndicator = indicatorsContainer.querySelector(".current-slide");
-  const nextIndicator = currentIndicator.nextElementSibling;
-  updateIndicators(currentIndicator, nextIndicator);
-});
+calulateSliderImgWidthAndPositonImgs();
+window.onresize = calulateSliderImgWidthAndPositonImgs;
 
-prevBtn.addEventListener("click", () => {
-  // grab current img slides & move slide on click
-  const currentSlide = document.querySelector(".current-slide");
-  const prevSlide = currentSlide.previousElementSibling;
-  moveSlide(slider, currentSlide, prevSlide);
-
-  // grab current indicators and update to show current location on slider
-  const currentIndicator = indicatorsContainer.querySelector(".current-slide");
-  const prevIndicator = currentIndicator.previousElementSibling;
-  updateIndicators(currentIndicator, prevIndicator);
-});
-
-// Indicators func to move slider
-indicatorsContainer.addEventListener("click", (e) => {
-  // grab clicked indicator dot
-  const targetIndicator = e.target.closest("button");
-  // return if clicked outside indicator
-  if (!targetIndicator) {
-    return;
-  }
-
-  // grab current img slide & indicator dot
-  const currentSlide = slider.querySelector(".current-slide");
-  const currentIndicator = indicatorsContainer.querySelector(".current-slide");
-  // grab index by matching elements
-  const targetIndex = indicators.findIndex((dot) => dot === targetIndicator);
-  // grab target slide
-  const targetSlide = slides[targetIndex];
-
-  moveSlide(slider, currentSlide, targetSlide);
-  updateIndicators(currentIndicator, targetIndicator);
-});
+// TODO: loop on next prev btn
+// TODO: timeout auto loop to next slide

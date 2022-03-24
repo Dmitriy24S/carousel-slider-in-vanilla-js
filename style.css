@@ -20,7 +20,7 @@ body {
 }
 .carousel__track-container {
   position: relative;
-  background: rgb(187, 247, 187);
+  background: rgb(207, 250, 207);
   height: 100%;
   overflow: hidden;
 }
