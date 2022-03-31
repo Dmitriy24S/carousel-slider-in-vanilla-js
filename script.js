@@ -12,22 +12,34 @@ let width;
 nextBtn.addEventListener("click", () => {
   // grab current img slides & move slide on click
   const currentSlide = document.querySelector(".current-slide");
-  const nextSlide = currentSlide.nextElementSibling;
+  let nextSlide = currentSlide.nextElementSibling;
+  if (nextSlide === null) {
+    nextSlide = currentSlide.parentNode.firstElementChild;
+  }
   moveSlide(slider, currentSlide, nextSlide);
   // grab current indicators and update to show current location on slider
   const currentIndicator = indicatorsContainer.querySelector(".current-slide");
-  const nextIndicator = currentIndicator.nextElementSibling;
+  let nextIndicator = currentIndicator.nextElementSibling;
+  if (nextIndicator === null) {
+    nextIndicator = currentIndicator.parentNode.firstElementChild;
+  }
   updateIndicators(currentIndicator, nextIndicator);
 });
 
 prevBtn.addEventListener("click", () => {
   // grab current img slides & move slide on click
   const currentSlide = document.querySelector(".current-slide");
-  const prevSlide = currentSlide.previousElementSibling;
+  let prevSlide = currentSlide.previousElementSibling;
+  if (prevSlide === null) {
+    prevSlide = currentSlide.parentNode.lastElementChild;
+  }
   moveSlide(slider, currentSlide, prevSlide);
   // grab current indicators and update to show current location on slider
   const currentIndicator = indicatorsContainer.querySelector(".current-slide");
-  const prevIndicator = currentIndicator.previousElementSibling;
+  let prevIndicator = currentIndicator.previousElementSibling;
+  if (prevIndicator === null) {
+    prevIndicator = currentIndicator.parentNode.lastElementChild;
+  }
   updateIndicators(currentIndicator, prevIndicator);
 });
 
@@ -88,5 +100,4 @@ const calulateSliderImgWidthAndPositonImgs = () => {
 calulateSliderImgWidthAndPositonImgs();
 window.onresize = calulateSliderImgWidthAndPositonImgs;
 
-// TODO: loop on next prev btn
 // TODO: timeout auto loop to next slide
